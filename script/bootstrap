@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Usage: script/bootstrap
+
+# Use current directory name as environment name
+# (Ref.: http://stackoverflow.com/a/1371283/11895)
+VENV_NAME="${PWD##*/}"
+
+# Let's be sure to run this is an interactive shell, otherwise venvburrito won't
+# be happy
+if [[ "$-" != *"i"* ]]; then
+    exec bash -i $0
+fi
+
+if [[ -d "$(type mkvirtualenv 2> /dev/null)" ]]; then
+    echo "You should have a working virtual environment setup to run this." >&2
+    exit 1
+fi
+
+# Ensure to be at the project root directory
+cd "$(dirname $0)/.."
+
+make_venv=true
+for i in $(lsvirtualenv); do
+    if [[ "$i" = "$VENV_NAME" ]]; then
+        make_venv=false
+        break
+    fi
+done
+
+if $make_venv; then
+    echo "Making a new virtual environment..."
+    mkvirtualenv --no-site-packages -r requirements.txt "$VENV_NAME"
+else
+    workon "$VENV_NAME"
+    if [[ "${VIRTUAL_ENV##*/}" = "$VENV_NAME" ]]; then
+        echo "Installing requirements..."
+        pip install --requirement requirements.txt --ignore-installed
+    else
+        echo "Something went wrong. Couldn't activate $VENV_NAME environment." >&2
+        exit 1
+    fi
+fi
