@@ -3,7 +3,7 @@
 
 import feedparser
 
-from entry import *
+from entry import Entry
 
 
 class Feed(object):
