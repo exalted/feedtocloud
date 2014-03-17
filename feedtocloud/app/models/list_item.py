@@ -3,6 +3,7 @@
 
 from section import Section
 
+
 class ListItem(Section):
     def __init__(self, text):
         super(ListItem, self).__init__('list', text)

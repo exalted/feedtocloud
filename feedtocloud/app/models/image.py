@@ -3,6 +3,7 @@
 
 from section import Section
 
+
 class Image(Section):
     def __init__(self, src):
         super(Image, self).__init__('image', src)
