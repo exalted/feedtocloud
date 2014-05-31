@@ -3,4 +3,5 @@
 
 
 class Markdown(object):
-    pass
+    def convert(self, entry):
+        raise NotImplementedError

@@ -7,7 +7,7 @@ from models import *
 
 
 class Yeni1Tarif(object):
-    def parse(self, raw_content):
+    def adapt(self, raw_content):
         sections = list()
 
         tags = BeautifulSoup(raw_content, "lxml").body.children
@@ -22,18 +22,18 @@ class Yeni1Tarif(object):
 
         return sections
 
-    def _extract_text(tag):
+    def _extract_text(self, tag):
         text = tag.get_text(strip=True).encode('utf-8')
         return Text(text)
 
-    def _extract_images(tag):
+    def _extract_images(self, tag):
         items = list()
         for descendant in tag.descendants:
             if descendant.name == 'img':
                 items.append(Image(descendant['src']))
         return items
 
-    def _extract_list_items(tag):
+    def _extract_list_items(self, tag):
         items = list()
         for item in tag.stripped_strings:
             items.append(ListItem(item.encode('utf-8')))

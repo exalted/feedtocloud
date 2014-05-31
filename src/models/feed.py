@@ -1,20 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import feedparser
-
-from entry import Entry
+import models
 
 
 class Feed(object):
-    def __init__(self, feed, parser):
-        self.feed = feed
+    def __init__(self, url, parser, adapter):
+        self.url = url
         self.parser = parser
-
-    def convert(self, converter):
-        return [converter.convert(e) for e in self.entries]
+        self.adapter = adapter
 
     @property
     def entries(self):
-        parsed = feedparser.parse(self.feed).entries
-        return [Entry(x, self.parser) for x in parsed]
+        entries = list()
+        for e in self.parser.parse(self.url).entries:
+            sections = self.adapter.adapt(e.content[0].value.encode('utf-8'))
+            entries.extend([models.Entry(e, sections)])
+        return entries

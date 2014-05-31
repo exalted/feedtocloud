@@ -2,28 +2,33 @@
 # -*- coding: utf-8 -*-
 
 import sys
+from os import environ as ENV
 
 from os.path import abspath, dirname, join
 sys.path.append(join(abspath(dirname(__file__)), 'src'))
 
-from os import environ as ENV
+import feedparser
 
-
-from models import Feed
-from adapters import Yeni1Tarif
+from adapters   import Yeni1Tarif
 from converters import Markdown
+
+import models
 
 
 def main():
     #! TODO: make these configurable
-    adapter = Yeni1Tarif()
+    parser    = feedparser
+    adapter   = Yeni1Tarif()
     converter = Markdown()
 
-    feed = Feed(ENV['FEED_URL'], adapter)
-    formatted = feed.convert(converter)
+    feed = models.Feed(ENV['FEED_URL'], parser, adapter)
+    entries = feed.entries
 
     #! TODO: do something more interesting
-    print(formatted)
+    # print(entries)
+    for e in entries:
+        print(converter.convert(e))
+        print('-'*50)
 
 
 if __name__ == '__main__':
