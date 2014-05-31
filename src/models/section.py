@@ -4,15 +4,12 @@
 
 class Section(object):
     def __init__(self, type, content):
-        self.type = type
-        self.content = content
+        self._check_errors(type, content)
 
-        self._check_errors()
-
-    def _check_errors(self):
-        if self.type not in ['text', 'image', 'list']:
+    def _check_errors(self, type, content):
+        if type not in ['text', 'image', 'list']:
             raise SectionError('Unknown type "%s".' % type)
-        if not self.content:
+        if not content:
             raise SectionError('Empty content.')
 
 

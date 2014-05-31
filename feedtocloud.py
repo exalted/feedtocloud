@@ -28,7 +28,6 @@ def main():
     # print(entries)
     for e in entries:
         print(converter.convert(e))
-        print('-'*50)
 
 
 if __name__ == '__main__':

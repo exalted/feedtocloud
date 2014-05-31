@@ -7,7 +7,7 @@ from section import Section
 class Image(Section):
     def __init__(self, src):
         super(Image, self).__init__('image', src)
+        self.src = src
 
-    @property
-    def markdown(self):
-        return '![Alt text](%s)' % self.content
+    def convert(self, converter):
+        return converter.image(self.src)

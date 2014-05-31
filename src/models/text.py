@@ -7,7 +7,7 @@ from section import Section
 class Text(Section):
     def __init__(self, text):
         super(Text, self).__init__('text', text)
+        self.text = text
 
-    @property
-    def markdown(self):
-        return self.content
+    def convert(self, converter):
+        return converter.text(self.text)
