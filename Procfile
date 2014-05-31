@@ -1,1 +1,1 @@
-job: script/feedtocloud
+job: script/run
