@@ -10,7 +10,7 @@ sys.path.append(join(abspath(dirname(__file__)), 'src'))
 import feedparser
 
 from adapters   import Yeni1Tarif
-from converters import Markdown
+from converters import Markdown, HTML
 
 import models
 
@@ -19,7 +19,7 @@ def main():
     #! TODO: make these configurable
     parser    = feedparser
     adapter   = Yeni1Tarif()
-    converter = Markdown()
+    converter = HTML()
 
     feed = models.Feed(ENV['FEED_URL'], parser, adapter)
     entries = feed.entries
