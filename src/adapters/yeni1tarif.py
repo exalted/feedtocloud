@@ -3,10 +3,7 @@
 
 from bs4 import BeautifulSoup
 
-from models.section import SectionError
-from models.text import Text
-from models.image import Image
-from models.list_item import ListItem
+from models import *
 
 
 class Yeni1Tarif(object):
@@ -17,29 +14,26 @@ class Yeni1Tarif(object):
         for tag in tags:
             if tag.name == 'p':
                 try:
-                    sections.append(Yeni1Tarif.extract_text(tag))
+                    sections.append(self._extract_text(tag))
                 except SectionError:
-                    sections.extend(Yeni1Tarif.extract_images(tag))
+                    sections.extend(self._extract_images(tag))
             elif tag.name in ['ul', 'ol']:
-                sections.extend(Yeni1Tarif.extract_list_items(tag))
+                sections.extend(self._extract_list_items(tag))
 
         return sections
 
-    @staticmethod
-    def extract_text(tag):
+    def _extract_text(tag):
         text = tag.get_text(strip=True).encode('utf-8')
         return Text(text)
 
-    @staticmethod
-    def extract_images(tag):
+    def _extract_images(tag):
         items = list()
         for descendant in tag.descendants:
             if descendant.name == 'img':
                 items.append(Image(descendant['src']))
         return items
 
-    @staticmethod
-    def extract_list_items(tag):
+    def _extract_list_items(tag):
         items = list()
         for item in tag.stripped_strings:
             items.append(ListItem(item.encode('utf-8')))

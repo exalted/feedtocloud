@@ -9,17 +9,21 @@ sys.path.append(join(abspath(dirname(__file__)), 'src'))
 from os import environ as ENV
 
 
-from models.feed import Feed
-from adapters.yeni1tarif import Yeni1Tarif
+from models import Feed
+from adapters import Yeni1Tarif
+from converters import Markdown
 
 
 def main():
-    feed = Feed(ENV['FEED_URL'], Yeni1Tarif())
-    run(feed)
+    #! TODO: make these configurable
+    adapter = Yeni1Tarif()
+    converter = Markdown()
 
-def run(feed):
-    for blog_post in feed.entries:
-        print(blog_post.markdown)
+    feed = Feed(ENV['FEED_URL'], adapter)
+    formatted = feed.convert(converter)
+
+    #! TODO: do something more interesting
+    print(formatted)
 
 
 if __name__ == '__main__':

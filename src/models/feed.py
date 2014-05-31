@@ -11,6 +11,9 @@ class Feed(object):
         self.feed = feed
         self.parser = parser
 
+    def convert(self, converter):
+        return [converter.convert(e) for e in self.entries]
+
     @property
     def entries(self):
         parsed = feedparser.parse(self.feed).entries
