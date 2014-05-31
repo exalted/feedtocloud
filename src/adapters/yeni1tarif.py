@@ -3,10 +3,10 @@
 
 from bs4 import BeautifulSoup
 
-from app.models.section import SectionError
-from app.models.text import Text
-from app.models.image import Image
-from app.models.list_item import ListItem
+from models.section import SectionError
+from models.text import Text
+from models.image import Image
+from models.list_item import ListItem
 
 
 class Yeni1Tarif(object):

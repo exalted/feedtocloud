@@ -4,4 +4,4 @@
 # Ensure to be at the project root directory
 cd "$(dirname $0)/.."
 
-python "feedtocloud/main.py" $@
+python "feedtocloud.py" $@
