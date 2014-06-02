@@ -1,7 +1,3 @@
-#
-# Feed
-#
-from feed  import Feed
 from entry import Entry
 
 #

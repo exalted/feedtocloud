@@ -7,23 +7,19 @@ from os import environ as ENV
 from os.path import abspath, dirname, join
 sys.path.append(join(abspath(dirname(__file__)), 'src'))
 
-import feedparser
-
 from adapters   import Yeni1Tarif
 from converters import Markdown, HTML
 
-import models
+import sources
 
 
 def main():
-    #! TODO: make these configurable
-    parser    = feedparser
     adapter   = Yeni1Tarif()
     converter = HTML()
 
-    feed = models.Feed(ENV['FEED_URL'], parser, adapter, converter)
+    feed = sources.Feed(ENV['SOURCE_URL'], adapter)
     for e in feed.entries:
-        print(e.converted_content)
+        print(converter.convert(e))
 
 
 if __name__ == '__main__':

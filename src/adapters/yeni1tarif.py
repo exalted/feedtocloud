@@ -7,10 +7,10 @@ from models import *
 
 
 class Yeni1Tarif(object):
-    def adapt(self, raw_content):
+    def adapt(self, content):
         sections = list()
 
-        tags = BeautifulSoup(raw_content, "lxml").body.children
+        tags = BeautifulSoup(content, "lxml").body.children
         for tag in tags:
             if tag.name == 'p':
                 try:
@@ -23,7 +23,7 @@ class Yeni1Tarif(object):
         return sections
 
     def _extract_text(self, tag):
-        text = tag.get_text(strip=True).encode('utf-8')
+        text = tag.get_text(strip=True)
         return Text(text)
 
     def _extract_images(self, tag):
@@ -36,5 +36,5 @@ class Yeni1Tarif(object):
     def _extract_list_items(self, tag):
         items = list()
         for item in tag.stripped_strings:
-            items.append(ListItem(item.encode('utf-8')))
+            items.append(ListItem(item))
         return items

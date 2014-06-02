@@ -8,11 +8,10 @@ class Converter(object):
     __metaclass__ = ABCMeta
 
     def convert(self, entry):
-        entry.converted_content = '%s\n%s' % (
+        return '%s\n%s' % (
             self.title(entry.title),
-            '\n'.join([x.convert(self) for x in entry.sections])
+            '\n'.join([x.convert(self).encode('utf-8') for x in entry.sections])
         )
-        return entry
 
     @abstractmethod
     def title(self, text):
