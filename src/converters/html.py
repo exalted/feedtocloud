@@ -5,6 +5,9 @@ from converter import Converter
 
 
 class HTML(Converter):
+    def __init(self):
+        super(HTML, self).__init__()
+
     def title(self, text):
         return '<h1>%s</h1>' % text
 

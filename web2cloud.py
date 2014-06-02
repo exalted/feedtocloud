@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from os import environ as ENV
 
 from os.path import abspath, dirname, join
 sys.path.append(join(abspath(dirname(__file__)), 'src'))
@@ -17,6 +16,7 @@ def main():
     adapter   = Yeni1Tarif()
     converter = HTML()
 
+    from os import environ as ENV
     feed = sources.Feed(ENV['SOURCE_URL'], adapter)
     for e in feed.entries:
         print(converter.convert(e))

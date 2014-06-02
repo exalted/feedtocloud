@@ -5,6 +5,9 @@ from converter import Converter
 
 
 class Markdown(Converter):
+    def __init__(self):
+        super(Markdown, self).__init__()
+
     def title(self, text):
         return '# %s\n' % text
 
