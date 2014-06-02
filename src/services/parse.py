@@ -55,8 +55,8 @@ class BatchRequest(object):
 
 class Request(object):
     def __init__(self, method, obj=None, **kwargs):
-        cls = obj.__class__ if obj else kwargs['cls']
         body = ParseObject.bind(obj) if obj else kwargs['body']
+        cls = type(obj) if obj else kwargs['cls']
 
         self.method = method
         self.path   = '/1/classes/%s' % cls.__name__
@@ -72,6 +72,14 @@ class ParseObject(object):
     @staticmethod
     def bind(entry):
         return {
-            'title'  : entry.title,
-            'digest' : entry.digest,
+            'content'     : entry.content,
+            'digest'      : entry.digest,
+            'identifier'  : entry.id,
+            'title'       : entry.title,
+            'summary'     : entry.summary,
+            'tags'        : entry.tags,
+            'publishedAt' : {
+                "__type": "Date",
+                "iso": entry.published_at.isoformat()
+            },
         }
