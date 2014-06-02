@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from base_converter import BaseConverter
+from converter import Converter
 
 
-class HTML(BaseConverter):
+class HTML(Converter):
     def title(self, text):
         return '<h1>%s</h1>' % text
 

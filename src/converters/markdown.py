@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from base_converter import BaseConverter
+from converter import Converter
 
 
-class Markdown(BaseConverter):
+class Markdown(Converter):
     def title(self, text):
         return '# %s\n' % text
 
