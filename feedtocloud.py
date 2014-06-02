@@ -21,13 +21,9 @@ def main():
     adapter   = Yeni1Tarif()
     converter = HTML()
 
-    feed = models.Feed(ENV['FEED_URL'], parser, adapter)
-    entries = feed.entries
-
-    #! TODO: do something more interesting
-    # print(entries)
-    for e in entries:
-        print(converter.convert(e))
+    feed = models.Feed(ENV['FEED_URL'], parser, adapter, converter)
+    for e in feed.entries:
+        print(e.converted_content)
 
 
 if __name__ == '__main__':
