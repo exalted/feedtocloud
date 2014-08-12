@@ -22,18 +22,21 @@ class Yeni1Tarif(object):
 
         return sections
 
-    def _extract_text(self, tag):
+    @staticmethod
+    def _extract_text(tag):
         text = tag.get_text(strip=True)
         return Text(text)
 
-    def _extract_images(self, tag):
+    @staticmethod
+    def _extract_images(tag):
         items = list()
         for descendant in tag.descendants:
             if descendant.name == 'img':
                 items.append(Image(descendant['src']))
         return items
 
-    def _extract_list_items(self, tag):
+    @staticmethod
+    def _extract_list_items(tag):
         items = list()
         for item in tag.stripped_strings:
             items.append(ListItem(item))

@@ -13,7 +13,8 @@ class FeedParser(object):
         entries = self._create_entries(parsed, adapter)
         return entries
 
-    def _parse(self, url):
+    @staticmethod
+    def _parse(url):
         return feedparser.parse(url).entries
 
     def _create_entries(self, parsed, adapter):
@@ -24,13 +25,14 @@ class FeedParser(object):
             entries.append(entry)
         return entries
 
-    def _new_entry(self, parsed):
+    @staticmethod
+    def _new_entry(parsed):
         return models.Entry(
             content      = parsed.content[0].value,
             id           = parsed.id,
             title        = parsed.title,
             summary      = parsed.summary,
-            tags         = [ x.term for x in parsed.tags],
+            tags         = [x.term for x in parsed.tags],
             # 9-valued tuple: ( year, month, day, hour, minute, second, day of week, day of year, dst-flag )
             # (Ref: http://stackoverflow.com/questions/686717/python-convert-9-tuple-utc-date-to-mysql-datetime-format)
             published_at = datetime.datetime(*(parsed.published_parsed[:6]))

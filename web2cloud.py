@@ -7,7 +7,7 @@ from os.path import abspath, dirname, join
 sys.path.append(join(abspath(dirname(__file__)), 'src'))
 
 from adapters   import Yeni1Tarif
-from converters import Markdown, HTML
+from converters import HTML
 from services   import Parse
 
 import sources
@@ -18,10 +18,10 @@ def main():
     converter = HTML()
     cloud     = Parse()
 
-    from os import environ as ENV
-    feed = sources.Feed(ENV['SOURCE_URL'], adapter)
-    # for e in feed.entries:
-    #     print(converter.convert(e))
+    from os import environ
+    feed = sources.Feed(environ['SOURCE_URL'], adapter)
+    for e in feed.entries:
+        print(converter.convert(e))
 
     cloud.save(feed.entries)
 

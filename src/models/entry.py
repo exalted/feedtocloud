@@ -6,6 +6,11 @@ import hashlib
 
 class Entry(object):
     def __init__(self, **kwargs):
+        self._content = None
+        self._title   = None
+        self._summary = None
+        self._tags    = None
+
         self.content      = kwargs['content']
         self.digest       = hashlib.md5(self.content).hexdigest()
 
@@ -33,9 +38,17 @@ class Entry(object):
         self._title = value.encode('utf-8')
 
     @property
+    def summary(self):
+        return self._summary
+
+    @summary.setter
+    def summary(self, value):
+        self._summary = value.encode('utf-8')
+
+    @property
     def tags(self):
         return self._tags
 
     @tags.setter
     def tags(self, value):
-        self._tags = [ x.encode('utf-8') for x in value]
+        self._tags = [x.encode('utf-8') for x in value]

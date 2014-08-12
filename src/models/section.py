@@ -7,12 +7,13 @@ from abc import ABCMeta, abstractmethod
 class Section(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, type, content):
-        self._check_errors(type, content)
+    def __init__(self, _type, content):
+        self._check_errors(_type, content)
 
-    def _check_errors(self, type, content):
-        if type not in ['text', 'image', 'list']:
-            raise SectionError('Unknown type "%s".' % type)
+    @staticmethod
+    def _check_errors(_type, content):
+        if _type not in ['text', 'image', 'list']:
+            raise SectionError('Unknown type "%s".' % _type)
         if not content:
             raise SectionError('Empty content.')
 

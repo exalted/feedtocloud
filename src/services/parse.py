@@ -4,9 +4,7 @@
 import json
 import httplib
 
-from abc import ABCMeta, abstractmethod
-
-from os import environ as ENV
+from os import environ
 
 
 class Parse(object):
@@ -14,7 +12,7 @@ class Parse(object):
         self.connection = httplib.HTTPSConnection('api.parse.com', 443)
 
     def save(self, entries):
-        batch = BatchRequest(self.connection, 50) # 50 is max allowed by Parse
+        batch = BatchRequest(self.connection, 50)  # 50 is max allowed by Parse
         for e in entries:
             batch.include(Create(e))
         print batch.execute()
@@ -42,12 +40,12 @@ class BatchRequest(object):
     @staticmethod
     def split(l, n):
         for i in xrange(0, len(l), n):
-            yield l[i:i+n]
+            yield l[i:i + n]
 
     def _request(self, method, path, requests):
         self.connection.request(method, path, json.dumps(requests), {
-            "X-Parse-Application-Id" : ENV['PARSE_APPLICATION_ID'],
-            "X-Parse-REST-API-Key"   : ENV['PARSE_REST_API_KEY'],
+            "X-Parse-Application-Id" : environ['PARSE_APPLICATION_ID'],
+            "X-Parse-REST-API-Key"   : environ['PARSE_REST_API_KEY'],
             "Content-Type"           : "application/json"
         })
         return json.loads(self.connection.getresponse().read())
