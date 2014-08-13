@@ -76,6 +76,7 @@ class ParseObject(object):
             'title'             : entry.title,
             'summary'           : entry.summary,
             'converted_content' : entry.converted_content,
+            'preview_image'     : entry.preview_image,
             'tags'              : entry.tags,
             'publishedAt'       : {
                 "__type" : "Date",

@@ -3,6 +3,8 @@
 
 import hashlib
 
+from models.image import Image
+
 
 class Entry(object):
     def __init__(self, **kwargs):
@@ -52,3 +54,10 @@ class Entry(object):
     @tags.setter
     def tags(self, value):
         self._tags = [x.encode('utf-8') for x in value]
+
+    @property
+    def preview_image(self):
+        for section in self.sections:
+            if type(section) is Image:
+                return section.src
+        return None
