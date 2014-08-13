@@ -9,20 +9,21 @@ import models
 
 
 class FeedParser(object):
-    def parse(self, url, adapter):
+    def parse(self, url, adapter, converter):
         parsed = self._parse(url)
-        entries = self._create_entries(parsed, adapter)
+        entries = self._create_entries(parsed, adapter, converter)
         return entries
 
     @staticmethod
     def _parse(url):
         return feedparser.parse(url).entries
 
-    def _create_entries(self, parsed, adapter):
+    def _create_entries(self, parsed, adapter, converter):
         entries = list()
         for x in parsed:
             entry = self._new_entry(x)
             entry.sections = adapter.adapt(entry.content)
+            entry.converted_content = converter.convert(entry)
             entries.append(entry)
         return entries
 
