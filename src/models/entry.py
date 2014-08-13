@@ -56,7 +56,7 @@ class Entry(object):
         self._tags = [x.encode('utf-8') for x in value]
 
     @property
-    def preview_image(self):
+    def preview_url(self):
         for section in self.sections:
             if type(section) is Image:
                 return section.src

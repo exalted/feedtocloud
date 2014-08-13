@@ -70,15 +70,15 @@ class ParseObject(object):
     @staticmethod
     def bind(entry):
         return {
-            'content'           : entry.content,
-            'digest'            : entry.digest,
-            'identifier'        : entry.id,
-            'title'             : entry.title,
-            'summary'           : entry.summary,
-            'converted_content' : entry.converted_content,
-            'preview_image'     : entry.preview_image,
-            'tags'              : entry.tags,
-            'publishedAt'       : {
+            'content'          : entry.content,
+            'digest'           : entry.digest,
+            'identifier'       : entry.id,
+            'title'            : entry.title,
+            'summary'          : entry.summary,
+            'convertedContent' : entry.converted_content,
+            'previewUrl'       : entry.preview_url,
+            'tags'             : entry.tags,
+            'publishedAt'      : {
                 "__type" : "Date",
                 "iso"    : entry.published_at.isoformat()
             },
