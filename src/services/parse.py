@@ -15,7 +15,7 @@ class Parse(object):
         batch = BatchRequest(self.connection, 50)  # 50 is max allowed by Parse
         for e in entries:
             batch.include(Create(e))
-        print batch.execute()
+        batch.execute()
 
 
 class BatchRequest(object):
