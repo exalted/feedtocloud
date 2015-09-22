@@ -7,6 +7,8 @@ import json
 from os import environ
 
 
+# TODO: maybe inherit from `Request`, because `_request` method is pretty much
+#       duplicate in both implementations.
 class BatchRequest(object):
     def __init__(self, connection, size):
         self.connection = connection
@@ -20,6 +22,7 @@ class BatchRequest(object):
         self.connection.connect()
         response = list()
         for chunk in BatchRequest.split(self.requests, self.size):
+            # TODO: hardcoded request method `POST` ain't cool.
             result = self._request('POST', '/1/batch', {
                 "requests": [request.__dict__ for request in chunk]
             })

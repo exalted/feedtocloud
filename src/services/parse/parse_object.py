@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 
+# TODO: this doesn't belong here, rename to sth like `Entry(Object)`
+#       and move it away.
 class ParseObject(object):
     @staticmethod
     def bind(entry):
