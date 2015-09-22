@@ -3,4 +3,4 @@
 # extracting) into various objects of types that are well known to us.
 #
 
-from yeni1tarif import Yeni1Tarif
+from yeni1tarif import *

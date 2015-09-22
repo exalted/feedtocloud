@@ -1,1 +1,1 @@
-from feed_parser import FeedParser
+from feed_parser import *

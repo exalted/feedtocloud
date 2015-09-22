@@ -1,2 +1,2 @@
-from markdown import Markdown
-from html     import HTML
+from markdown import *
+from html     import *

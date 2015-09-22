@@ -1,1 +1,1 @@
-from feed import Feed
+from feed import *

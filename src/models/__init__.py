@@ -1,9 +1,9 @@
-from entry import Entry
+from entry import *
 
 #
 # Sections
 #
-from section   import Section, SectionError
-from text      import Text
-from image     import Image
-from list_item import ListItem
+from section   import *
+from text      import *
+from image     import *
+from list_item import *
