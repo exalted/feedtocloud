@@ -14,7 +14,7 @@ class Parse(object):
     def save(self, entries):
         batch = BatchRequest(self.connection, 50)  # 50 is max allowed by Parse
         for e in entries:
-            batch.include(Create(e))
+            batch.include(CreateRequest(e))
         batch.execute()
 
 
@@ -61,9 +61,9 @@ class Request(object):
         self.body   = body
 
 
-class Create(Request):
+class CreateRequest(Request):
     def __init__(self, obj=None, **kwargs):
-        super(Create, self).__init__('POST', obj, **kwargs)
+        super(CreateRequest, self).__init__('POST', obj, **kwargs)
 
 
 class ParseObject(object):
