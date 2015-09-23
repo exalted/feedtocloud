@@ -9,19 +9,19 @@ from models.image import Image
 class Entry(object):
     def __init__(self, **kwargs):
         self._content = None
-        self._title   = None
+        self._title = None
         self._summary = None
-        self._tags    = None
+        self._tags = None
 
-        self.content      = kwargs['content']
-        self.digest       = hashlib.md5(self.content).hexdigest()
+        self.content = kwargs['content']
+        self.digest = hashlib.md5(self.content).hexdigest()
 
-        self.id           = kwargs['id']
-        self.title        = kwargs['title']
-        self.summary      = kwargs['summary']
-        self.tags         = kwargs['tags']
+        self.id = kwargs['id']
+        self.title = kwargs['title']
+        self.summary = kwargs['summary']
+        self.tags = kwargs['tags']
         self.published_at = kwargs['published_at']
-        self.sections     = []
+        self.sections = []
 
     @property
     def content(self):
@@ -64,16 +64,16 @@ class Entry(object):
 
     def as_dict(self):
         return {
-            'content'          : self.content,
-            'digest'           : self.digest,
-            'identifier'       : self.id,
-            'title'            : self.title,
-            'summary'          : self.summary,
-            'convertedContent' : self.converted_content,
-            'previewUrl'       : self.preview_url,
-            'tags'             : self.tags,
-            'publishedAt'      : {
-                "__type" : "Date",
-                "iso"    : self.published_at.isoformat()
+            'content': self.content,
+            'digest': self.digest,
+            'identifier': self.id,
+            'title': self.title,
+            'summary': self.summary,
+            'convertedContent': self.converted_content,
+            'previewUrl': self.preview_url,
+            'tags': self.tags,
+            'publishedAt': {
+                "__type": "Date",
+                "iso": self.published_at.isoformat()
             },
         }

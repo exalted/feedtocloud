@@ -10,9 +10,9 @@ from os import environ
 class Request(object):
     def __init__(self, connection, method, klass, obj):
         self.connection = connection
-        self.method     = method
-        self.klass      = klass
-        self.obj        = obj
+        self.method = method
+        self.klass = klass
+        self.obj = obj
 
     def execute(self):
         return Request._request(
@@ -34,8 +34,8 @@ class Request(object):
     def _request(connection, method, path, body):
         connection.connect()
         connection.request(method, path, json.dumps(body), {
-            "X-Parse-Application-Id" : environ['PARSE_APPLICATION_ID'],
-            "X-Parse-REST-API-Key"   : environ['PARSE_REST_API_KEY'],
-            "Content-Type"           : "application/json"
+            "X-Parse-Application-Id": environ['PARSE_APPLICATION_ID'],
+            "X-Parse-REST-API-Key": environ['PARSE_REST_API_KEY'],
+            "Content-Type": "application/json"
         })
         return json.loads(connection.getresponse().read())

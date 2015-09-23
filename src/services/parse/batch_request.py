@@ -6,13 +6,13 @@ from request import Request
 
 class BatchRequest(object):
     method = 'POST'
-    path   = '/1/batch'
+    path = '/1/batch'
 
     # Parse allows to create, update, or delete up to 50 objects in one call
     def __init__(self, connection, requests, chunk_size=50):
         assert chunk_size <= 50
         self.connection = connection
-        self.requests   = requests
+        self.requests = requests
         self.chunk_size = chunk_size
 
     def execute(self):
@@ -29,7 +29,7 @@ class BatchRequest(object):
 
     def _body(self, requests):
         assert len(requests) <= self.chunk_size
-        return { "requests": [BatchRequest._wrap(x) for x in requests] }
+        return {"requests": [BatchRequest._wrap(x) for x in requests]}
 
     @staticmethod
     def split(l, n):
@@ -40,6 +40,6 @@ class BatchRequest(object):
     def _wrap(request):
         return {
             "method": request.method,
-            "path"  : request.path,
-            "body"  : request.body
+            "path": request.path,
+            "body": request.body
         }
