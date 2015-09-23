@@ -5,5 +5,14 @@ from request import Request
 
 
 class CreateRequest(Request):
-    def __init__(self, obj=None, **kwargs):
-        super(CreateRequest, self).__init__('POST', obj, **kwargs)
+    method = 'POST'
+
+    def __init__(self, connection, obj):
+        # TODO: hardcoded `classes` (i.e., objects) request class.
+        #       Parse supports also `users`, `files`, `events`, etc.
+        super(CreateRequest, self).__init__(
+            connection,
+            self.method,
+            'classes',
+            obj
+        )

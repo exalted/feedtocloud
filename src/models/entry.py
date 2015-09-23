@@ -61,3 +61,19 @@ class Entry(object):
             if type(section) is Image:
                 return section.src
         return None
+
+    def as_dict(self):
+        return {
+            'content'          : self.content,
+            'digest'           : self.digest,
+            'identifier'       : self.id,
+            'title'            : self.title,
+            'summary'          : self.summary,
+            'convertedContent' : self.converted_content,
+            'previewUrl'       : self.preview_url,
+            'tags'             : self.tags,
+            'publishedAt'      : {
+                "__type" : "Date",
+                "iso"    : self.published_at.isoformat()
+            },
+        }

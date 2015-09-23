@@ -12,7 +12,16 @@ class Parse(object):
         self.connection = httplib.HTTPSConnection('api.parse.com', 443)
 
     def save(self, entries):
-        batch = BatchRequest(self.connection, 50)  # 50 is max allowed by Parse
-        for e in entries:
-            batch.include(CreateRequest(e))
-        batch.execute()
+        new_entries = self._filter(entries)
+        # TODO: clearly making the actual request should be concern of a
+        #       separate object. Below same `self.connection` is passed to both
+        #       outer `BatchRequest` and inner `CreateRequest` requests,
+        #       although only outer connection is used after all.
+        BatchRequest(
+            self.connection,
+            [CreateRequest(self.connection, x) for x in new_entries]
+        ).execute()
+
+    def _filter(self, entries):
+        # TODO: missing implementation
+        return entries
