@@ -1,43 +1,43 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
-
-# TODO: don't read from ENV, instead ask params in constructor
-from os import environ
+from request import Request
 
 
-# TODO: maybe inherit from `Request`, because `_request` method is pretty much
-#       duplicate in both implementations.
 class BatchRequest(object):
-    def __init__(self, connection, size):
-        self.connection = connection
-        self.size       = size
-        self.requests   = list()
+    method = 'POST'
+    path = '/1/batch'
 
-    def include(self, request):
-        self.requests.append(request)
+    # Parse allows to create, update, or delete up to 50 objects in one call
+    def __init__(self, requests, chunk_size=50):
+        assert chunk_size <= 50
+        self.requests = requests
+        self.chunk_size = chunk_size
 
-    def execute(self):
-        self.connection.connect()
+    def execute(self, connection):
         response = list()
-        for chunk in BatchRequest.split(self.requests, self.size):
-            # TODO: hardcoded request method `POST` ain't cool.
-            result = self._request('POST', '/1/batch', {
-                "requests": [request.__dict__ for request in chunk]
-            })
+        for chunk in BatchRequest.split(self.requests, self.chunk_size):
+            result = Request._request(
+                connection,
+                self.method,
+                self.path,
+                self._body(chunk)
+            )
             response.extend(result)
         return response
+
+    def _body(self, requests):
+        assert len(requests) <= self.chunk_size
+        return {"requests": [BatchRequest._wrap(x) for x in requests]}
 
     @staticmethod
     def split(l, n):
         for i in xrange(0, len(l), n):
             yield l[i:i + n]
 
-    def _request(self, method, path, requests):
-        self.connection.request(method, path, json.dumps(requests), {
-            "X-Parse-Application-Id" : environ['PARSE_APPLICATION_ID'],
-            "X-Parse-REST-API-Key"   : environ['PARSE_REST_API_KEY'],
-            "Content-Type"           : "application/json"
-        })
-        return json.loads(self.connection.getresponse().read())
+    @staticmethod
+    def _wrap(request):
+        return {
+            "method": request.method,
+            "path": request.path,
+            "body": request.body
+        }

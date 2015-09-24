@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import httplib
@@ -8,11 +7,13 @@ from create_request import CreateRequest
 
 
 class Parse(object):
-    def __init__(self):
-        self.connection = httplib.HTTPSConnection('api.parse.com', 443)
+    _connection = httplib.HTTPSConnection('api.parse.com', 443)
 
     def save(self, entries):
-        batch = BatchRequest(self.connection, 50)  # 50 is max allowed by Parse
-        for e in entries:
-            batch.include(CreateRequest(e))
-        batch.execute()
+        new_entries = self._filter(entries)
+        request = BatchRequest([CreateRequest(x) for x in new_entries])
+        request.execute(self._connection)
+
+    def _filter(self, entries):
+        # TODO: missing implementation
+        return entries
