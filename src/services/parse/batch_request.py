@@ -9,17 +9,16 @@ class BatchRequest(object):
     path = '/1/batch'
 
     # Parse allows to create, update, or delete up to 50 objects in one call
-    def __init__(self, connection, requests, chunk_size=50):
+    def __init__(self, requests, chunk_size=50):
         assert chunk_size <= 50
-        self.connection = connection
         self.requests = requests
         self.chunk_size = chunk_size
 
-    def execute(self):
+    def execute(self, connection):
         response = list()
         for chunk in BatchRequest.split(self.requests, self.chunk_size):
             result = Request._request(
-                self.connection,
+                connection,
                 self.method,
                 self.path,
                 self._body(chunk)

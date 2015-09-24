@@ -8,15 +8,14 @@ from os import environ
 
 
 class Request(object):
-    def __init__(self, connection, method, klass, obj):
-        self.connection = connection
+    def __init__(self, method, klass, obj):
         self.method = method
         self.klass = klass
         self.obj = obj
 
-    def execute(self):
+    def execute(self, connection):
         return Request._request(
-            self.connection,
+            connection,
             self.method,
             self.path,
             self.body
