@@ -1,4 +1,4 @@
-# Project specifict ignore rules
+# Project specific ignore rules
 
 # Ignore all logfiles and tempfiles.
 /tmp
@@ -76,3 +76,8 @@ docs/_build/
 [Ss]cripts
 
 
+################################################################################
+
+# Project specific ignore overrides
+
+!/bin/

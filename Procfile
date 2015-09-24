@@ -1,1 +1,1 @@
-job: script/run
+job: bin/run

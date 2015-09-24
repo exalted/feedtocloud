@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: script/run
+# Usage: bin/run
 
 # Ensure to be at the project root directory
 cd "$(dirname $0)/.."
