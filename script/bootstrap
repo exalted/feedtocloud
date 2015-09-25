@@ -29,12 +29,21 @@ done
 
 if $make_venv; then
   echo "Making a new virtual environment..."
-  mkvirtualenv --no-site-packages -r requirements.txt "$VENV_NAME"
+  mkvirtualenv -r requirements.txt "$VENV_NAME"
+  workon "$VENV_NAME"
+  if [[ "${VIRTUAL_ENV##*/}" = "$VENV_NAME" ]]; then
+      pip install --ignore-installed ipython
+      pip install --ignore-installed flake8
+      echo "Done."
+  else
+    echo "Something went wrong. Couldn't activate $VENV_NAME environment." >&2
+    exit 1
+  fi
 else
   workon "$VENV_NAME"
   if [[ "${VIRTUAL_ENV##*/}" = "$VENV_NAME" ]]; then
-    echo "Installing requirements..."
-    pip install --requirement requirements.txt --ignore-installed
+    pip install --ignore-installed --requirement requirements.txt > /dev/null
+    echo "Everything is all right."
   else
     echo "Something went wrong. Couldn't activate $VENV_NAME environment." >&2
     exit 1
