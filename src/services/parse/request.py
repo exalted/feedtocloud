@@ -34,6 +34,6 @@ class Request(object):
         connection.request(method, path, json.dumps(body), {
             "X-Parse-Application-Id": environ['PARSE_APPLICATION_ID'],
             "X-Parse-REST-API-Key": environ['PARSE_REST_API_KEY'],
-            "Content-Type": "application/json"
+            "Content-Type": "application/json;charset=utf-8"
         })
         return json.loads(connection.getresponse().read())
