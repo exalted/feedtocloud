@@ -33,6 +33,7 @@ if $make_venv; then
   workon "$VENV_NAME"
   if [[ "${VIRTUAL_ENV##*/}" = "$VENV_NAME" ]]; then
       pip install --ignore-installed ipython
+      pip install --ignore-installed yolk
       pip install --ignore-installed flake8
       echo "Done."
   else
