@@ -5,6 +5,7 @@ import sys
 
 from os.path import abspath, dirname, join
 sys.path.append(join(abspath(dirname(__file__)), 'src'))
+sys.path.append(join(abspath(dirname(__file__)), 'lib', 'vendor'))
 
 from adapters import Yeni1Tarif
 from services import Parse
