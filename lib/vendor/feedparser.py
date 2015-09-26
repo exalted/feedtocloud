@@ -3660,7 +3660,7 @@ def convert_to_utf8(http_headers, data):
             continue
         tried_encodings.append(proposed_encoding)
         try:
-            data = data.decode(proposed_encoding)
+            data = data
         except (UnicodeDecodeError, LookupError):
             pass
         else:
@@ -3671,7 +3671,7 @@ def convert_to_utf8(http_headers, data):
                 data = RE_XML_DECLARATION.sub(new_declaration, data)
             else:
                 data = new_declaration + u'\n' + data
-            data = data.encode('utf-8')
+            data = data
             break
     # if still no luck, give up
     if not known_encoding:
