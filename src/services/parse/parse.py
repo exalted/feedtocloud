@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import httplib
+from os import environ
 
 from batch_request import BatchRequest
 from create_request import CreateRequest
@@ -18,7 +19,6 @@ class Parse(object):
     def _filter_already_saved(self, entries):
         import json
         import urllib
-        from os import environ
 
         params = urllib.urlencode({
             "where": json.dumps({
@@ -27,6 +27,7 @@ class Parse(object):
         })
         self._connection.connect()
         self._connection.request('GET', '/1/classes/Entry?%s' % params, '', {
+            "Content-Type": "application/json;charset=utf-8",
             "X-Parse-Application-Id": environ['PARSE_APPLICATION_ID'],
             "X-Parse-REST-API-Key": environ['PARSE_REST_API_KEY']
         })

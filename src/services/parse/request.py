@@ -2,7 +2,7 @@
 
 import json
 
-# TODO: don't read from ENV, instead take params
+# TODO: don't read from environment, instead take params
 from os import environ
 
 
@@ -32,8 +32,8 @@ class Request(object):
     def _request(connection, method, path, body):
         connection.connect()
         connection.request(method, path, json.dumps(body), {
+            "Content-Type": "application/json;charset=utf-8",
             "X-Parse-Application-Id": environ['PARSE_APPLICATION_ID'],
-            "X-Parse-REST-API-Key": environ['PARSE_REST_API_KEY'],
-            "Content-Type": "application/json;charset=utf-8"
+            "X-Parse-REST-API-Key": environ['PARSE_REST_API_KEY']
         })
         return json.loads(connection.getresponse().read())

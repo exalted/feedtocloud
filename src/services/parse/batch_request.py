@@ -2,7 +2,11 @@
 
 from request import Request
 
+# TODO: don't read from environment, instead take params
+from os import environ
 
+
+# TODO: inherit from `Request` and override `#execute`
 class BatchRequest(object):
     method = 'POST'
     path = '/1/batch'
