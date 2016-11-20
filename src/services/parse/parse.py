@@ -25,8 +25,14 @@ class Parse(object):
                 "identifier": {"$in": [x.id for x in entries]}
             })
         })
+        url = '%s/classes/Entry?%s' % (environ['PARSE_MOUNT'], params)
+
+        # why the magic number? https://www.parse.com/questions/rest-get-limit
+        if len(url) > 7000:
+            raise ValueError('The query is too long')
+
         self._connection.connect()
-        self._connection.request('GET', '%s/classes/Entry?%s' % (environ['PARSE_MOUNT'], params), '', {
+        self._connection.request('GET', url, '', {
             "Content-Type": "application/json;charset=utf-8",
             "X-Parse-Application-Id": environ['PARSE_APPLICATION_ID']
         })
