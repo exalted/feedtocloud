@@ -22,7 +22,7 @@ class Request(object):
 
     @property
     def path(self):
-        return '/1/%s/%s' % (self.klass, type(self.obj).__name__)
+        return '%s/%s/%s' % (environ['PARSE_MOUNT'], self.klass, type(self.obj).__name__)
 
     @property
     def body(self):
@@ -34,6 +34,9 @@ class Request(object):
         connection.request(method, path, json.dumps(body), {
             "Content-Type": "application/json;charset=utf-8",
             "X-Parse-Application-Id": environ['PARSE_APPLICATION_ID'],
-            "X-Parse-REST-API-Key": environ['PARSE_REST_API_KEY']
+            # TODO: don't hardcode this header, instead either types that inherit
+            #       from `Request` have to specify, or (maybe even better) clients
+            #       can add/override.
+            "X-Parse-Master-Key": environ['PARSE_MASTER_KEY']
         })
         return json.loads(connection.getresponse().read())

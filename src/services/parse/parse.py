@@ -8,7 +8,7 @@ from create_request import CreateRequest
 
 
 class Parse(object):
-    _connection = httplib.HTTPSConnection('api.parse.com', 443)
+    _connection = httplib.HTTPSConnection(environ['PARSE_HOST'], 443)
 
     def save(self, entries):
         new_entries = self._filter_already_saved(entries)
@@ -26,10 +26,9 @@ class Parse(object):
             })
         })
         self._connection.connect()
-        self._connection.request('GET', '/1/classes/Entry?%s' % params, '', {
+        self._connection.request('GET', '%s/classes/Entry?%s' % (environ['PARSE_MOUNT'], params), '', {
             "Content-Type": "application/json;charset=utf-8",
-            "X-Parse-Application-Id": environ['PARSE_APPLICATION_ID'],
-            "X-Parse-REST-API-Key": environ['PARSE_REST_API_KEY']
+            "X-Parse-Application-Id": environ['PARSE_APPLICATION_ID']
         })
         response = json.loads(self._connection.getresponse().read())
         results = response['results']

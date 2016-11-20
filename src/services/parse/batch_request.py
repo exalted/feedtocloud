@@ -9,7 +9,7 @@ from os import environ
 # TODO: inherit from `Request` and override `#execute`
 class BatchRequest(object):
     method = 'POST'
-    path = '/1/batch'
+    path = '%s/batch' % environ['PARSE_MOUNT']
 
     # Parse allows to create, update, or delete up to 50 objects in one call
     def __init__(self, requests, chunk_size=50):
