@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+from os import environ
 
 from os.path import abspath, dirname, join
 sys.path.append(join(abspath(dirname(__file__)), 'src'))
@@ -17,7 +18,6 @@ def main():
     adapter   = Yeni1Tarif()
     cloud     = Parse()
 
-    from os import environ
     feed = sources.Feed(environ['SOURCE_URL'], adapter)
 
     cloud.save(feed.entries)

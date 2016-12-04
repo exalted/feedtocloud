@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import httplib
+from os import environ
 
 from batch_request import BatchRequest
 from create_request import CreateRequest
 
 
 class Parse(object):
-    _connection = httplib.HTTPSConnection('api.parse.com', 443)
+    _connection = httplib.HTTPSConnection(environ['PARSE_HOST'], 443)
 
     def save(self, entries):
         new_entries = self._filter_already_saved(entries)
@@ -18,17 +19,22 @@ class Parse(object):
     def _filter_already_saved(self, entries):
         import json
         import urllib
-        from os import environ
 
         params = urllib.urlencode({
             "where": json.dumps({
                 "identifier": {"$in": [x.id for x in entries]}
             })
         })
+        url = '%s/classes/Entry?%s' % (environ['PARSE_MOUNT'], params)
+
+        # why the magic number? https://www.parse.com/questions/rest-get-limit
+        if len(url) > 7000:
+            raise ValueError('The query is too long')
+
         self._connection.connect()
-        self._connection.request('GET', '/1/classes/Entry?%s' % params, '', {
-            "X-Parse-Application-Id": environ['PARSE_APPLICATION_ID'],
-            "X-Parse-REST-API-Key": environ['PARSE_REST_API_KEY']
+        self._connection.request('GET', url, '', {
+            "Content-Type": "application/json;charset=utf-8",
+            "X-Parse-Application-Id": environ['PARSE_APPLICATION_ID']
         })
         response = json.loads(self._connection.getresponse().read())
         results = response['results']
